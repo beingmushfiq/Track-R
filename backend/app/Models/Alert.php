@@ -14,6 +14,7 @@ class Alert extends Model
         'tenant_id',
         'vehicle_id',
         'device_id',
+        'alert_rule_id',
         'type',
         'severity',
         'title',
@@ -42,5 +43,10 @@ class Alert extends Model
     public function device(): BelongsTo
     {
         return $this->belongsTo(Device::class);
+    }
+
+    public function rule(): BelongsTo
+    {
+        return $this->belongsTo(AlertRule::class, 'alert_rule_id');
     }
 }

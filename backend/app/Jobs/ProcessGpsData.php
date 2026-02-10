@@ -92,8 +92,12 @@ class ProcessGpsData implements ShouldQueue
             // Check Geofences (Placeholder)
             // $this->checkGeofences($device, $gpsData);
 
-            // Check Alerts (Placeholder)
-            // $this->checkAlerts($device, $gpsData);
+            $alertService = app(\App\Services\AlertService::class);
+            $alertService->evaluate($device, $gpsData);
+
+            // Check Geofences
+            $geofenceService = app(\App\Services\GeofenceService::class);
+            $geofenceService->evaluate($device, $gpsData);
 
         } catch (\Exception $e) {
             Log::error('ProcessGpsData: Error processing job', [

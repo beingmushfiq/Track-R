@@ -10,6 +10,8 @@ return new class extends Migration {
         Schema::create('alerts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->constrained()->onDelete('cascade');
+            $table->foreignId('device_model_id')->constrained()->onDelete('restrict');
+            $table->foreignId('alert_rule_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('vehicle_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('device_id')->nullable()->constrained()->onDelete('cascade');
             $table->enum('type', [
