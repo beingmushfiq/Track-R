@@ -1,0 +1,43 @@
+# System
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.backup
+.env.production
+.env.staging
+
+# Dependencies
+/node_modules
+/vendor
+/backend/vendor
+/device-server/node_modules
+/mobile/build
+/mobile/ios/Pods
+/mobile/android/.gradle
+
+# Build outputs
+/dist
+/build
+/public/build
+/public/hot
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/storage/logs/*.log
+
+# Laravel
+/backend/storage/*.key
+/backend/storage/app/public
+/backend/storage/framework/cache/data/*
+/backend/storage/framework/sessions/*
+/backend/storage/framework/testing/*
+/backend/storage/framework/views/*
+
+# IDE
+.idea
+.vscode
+*.sublime-workspace
