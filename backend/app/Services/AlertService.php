@@ -80,6 +80,7 @@ class AlertService
             'message' => "Rule '{$rule->name}' triggered at {$data->gps_time}",
             'latitude' => $data->latitude,
             'longitude' => $data->longitude,
+            'triggered_at' => $data->gps_time,
             'data' => [
                 'speed' => $data->speed,
                 'condition' => $rule->conditions
@@ -88,5 +89,17 @@ class AlertService
         ]);
 
         Log::info("Alert triggered: {$alert->id} for Device: {$device->imei}");
+
+        // Broadcast alert event
+        event(new \App\Events\AlertTriggered($alert));
+
+        // Send Notifications
+        try {
+            /** @var \App\Services\NotificationService $notificationService */
+            $notificationService = app(\App\Services\NotificationService::class);
+            $notificationService->sendAlertNotification($alert);
+        } catch (\Exception $e) {
+            Log::error("Failed to send alert notifications: " . $e->getMessage());
+        }
     }
 }

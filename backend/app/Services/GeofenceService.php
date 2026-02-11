@@ -80,7 +80,7 @@ class GeofenceService
 
     protected function recordEvent(Geofence $geofence, Device $device, string $type, GpsData $data): void
     {
-        GeofenceEvent::create([
+        $geofenceEvent = GeofenceEvent::create([
             'geofence_id' => $geofence->id,
             'vehicle_id' => $device->vehicle_id,
             'device_id' => $device->id,
@@ -91,6 +91,9 @@ class GeofenceService
         ]);
 
         Log::info("Geofence {$type}: {$geofence->name} for Device: {$device->imei}");
+
+        // Broadcast geofence event
+        event(new \App\Events\GeofenceEventOccurred($geofenceEvent));
 
         // TODO: Trigger Notification
     }

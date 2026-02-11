@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('stops', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained()->onDelete('cascade');
             $table->foreignId('vehicle_id')->constrained()->onDelete('cascade');
             $table->foreignId('device_id')->constrained()->onDelete('cascade');
             $table->foreignId('trip_id')->nullable()->constrained()->onDelete('set null');

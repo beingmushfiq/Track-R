@@ -17,14 +17,20 @@ class Device extends Model
         'vehicle_id',
         'device_model_id',
         'imei',
+        'unique_id',
         'sim_number',
         'sim_provider',
+        'phone_number',
         'installation_date',
         'expiry_date',
         'configuration',
         'status',
         'is_online',
         'last_communication',
+        'last_seen_at',
+        'engine_locked',
+        'last_command_at',
+        'last_command_type',
     ];
 
     protected $casts = [
@@ -33,6 +39,9 @@ class Device extends Model
         'configuration' => 'array',
         'is_online' => 'boolean',
         'last_communication' => 'datetime',
+        'last_seen_at' => 'datetime',
+        'engine_locked' => 'boolean',
+        'last_command_at' => 'datetime',
     ];
 
     public function vehicle(): BelongsTo

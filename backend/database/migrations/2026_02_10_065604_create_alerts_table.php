@@ -38,6 +38,7 @@ return new class extends Migration {
             $table->string('address', 500)->nullable();
             $table->boolean('is_read')->default(false);
             $table->timestamp('read_at')->nullable();
+            $table->timestamp('triggered_at')->nullable();
             $table->timestamps();
 
             $table->index('tenant_id');
@@ -46,6 +47,7 @@ return new class extends Migration {
             $table->index('type');
             $table->index('severity');
             $table->index('is_read');
+            $table->index('triggered_at');
             $table->index('created_at');
         });
     }

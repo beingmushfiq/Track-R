@@ -99,4 +99,38 @@ class GeofenceController extends Controller
 
         return response()->json(['message' => 'Geofence deleted successfully']);
     }
+
+    /**
+     * Get geofence events history.
+     */
+    public function events(Request $request, Geofence $geofence): JsonResponse
+    {
+        $request->validate([
+            'start_date' => 'sometimes|date',
+            'end_date' => 'sometimes|date|after_or_equal:start_date',
+            'per_page' => 'sometimes|integer|min:1|max:100',
+        ]);
+
+        $perPage = $request->input('per_page', 20);
+
+        // Assuming relationship exists: $geofence->events()
+        // If not, we might need to query the events table directly if it's unrelated
+        // But let's assume standard relationship for now
+        $query = $geofence->events()->with(['vehicle', 'device']);
+
+        if ($request->has('start_date')) {
+            $query->where('event_time', '>=', $request->input('start_date'));
+        }
+
+        if ($request->has('end_date')) {
+            $query->where('event_time', '<=', $request->input('end_date'));
+        }
+
+        $events = $query->orderBy('event_time', 'desc')->paginate($perPage);
+
+        return response()->json([
+            'success' => true,
+            'data' => $events,
+        ]);
+    }
 }

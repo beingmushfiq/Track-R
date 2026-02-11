@@ -13,7 +13,9 @@ class Alert extends Model
     protected $fillable = [
         'tenant_id',
         'vehicle_id',
+        'vehicle_id',
         'device_id',
+        'device_model_id',
         'alert_rule_id',
         'type',
         'severity',
@@ -25,6 +27,7 @@ class Alert extends Model
         'address',
         'is_read',
         'read_at',
+        'triggered_at',
     ];
 
     protected $casts = [
@@ -33,6 +36,7 @@ class Alert extends Model
         'longitude' => 'decimal:7',
         'is_read' => 'boolean',
         'read_at' => 'datetime',
+        'triggered_at' => 'datetime',
     ];
 
     public function vehicle(): BelongsTo
@@ -45,7 +49,7 @@ class Alert extends Model
         return $this->belongsTo(Device::class);
     }
 
-    public function rule(): BelongsTo
+    public function alertRule(): BelongsTo
     {
         return $this->belongsTo(AlertRule::class, 'alert_rule_id');
     }

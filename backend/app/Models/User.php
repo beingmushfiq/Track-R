@@ -62,4 +62,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Tenant::class);
     }
+
+    /**
+     * Route notifications for the Twilio channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string|null
+     */
+    public function routeNotificationForTwilio($notification)
+    {
+        return $this->phone;
+    }
 }

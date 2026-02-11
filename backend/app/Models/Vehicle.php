@@ -49,8 +49,13 @@ class Vehicle extends Model
         return $this->belongsTo(VehicleGroup::class, 'vehicle_group_id');
     }
 
-    public function device(): HasMany
+    public function trips(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Device::class);
+        return $this->hasMany(Trip::class);
+    }
+
+    public function device(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Device::class)->latestOfMany();
     }
 }

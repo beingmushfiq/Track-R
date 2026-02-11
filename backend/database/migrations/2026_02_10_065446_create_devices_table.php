@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->foreignId('vehicle_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('device_model_id')->constrained()->onDelete('restrict');
             $table->string('imei', 20)->unique();
+            $table->string('unique_id', 50)->nullable()->unique();
             $table->string('sim_number', 20)->nullable();
             $table->string('sim_provider', 50)->nullable();
             $table->date('installation_date')->nullable();

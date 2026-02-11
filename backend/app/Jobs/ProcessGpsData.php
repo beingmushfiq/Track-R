@@ -89,6 +89,13 @@ class ProcessGpsData implements ShouldQueue
 
             $gpsData->save();
 
+            // Update cached last position
+            $trackingService = app(\App\Services\TrackingService::class);
+            $trackingService->updateLastPosition($device->id, $gpsData);
+
+            // Broadcast location update
+            event(new \App\Events\LocationUpdated($device->tenant_id, $device->vehicle_id, $gpsData));
+
             // Check Geofences (Placeholder)
             // $this->checkGeofences($device, $gpsData);
 
@@ -98,6 +105,10 @@ class ProcessGpsData implements ShouldQueue
             // Check Geofences
             $geofenceService = app(\App\Services\GeofenceService::class);
             $geofenceService->evaluate($device, $gpsData);
+
+            // Process trip detection
+            $tripService = app(\App\Services\TripService::class);
+            $tripService->processGpsPoint($device, $gpsData);
 
         } catch (\Exception $e) {
             Log::error('ProcessGpsData: Error processing job', [
